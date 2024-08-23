@@ -34,7 +34,6 @@ borrowRouter.get(
   mostActiveUser
 );
 
-// Pending
 // Books summary
 borrowRouter.get(
   "/books_summary",

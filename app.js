@@ -12,62 +12,8 @@ import loginRouter from "./routers/login_router.js";
 import { User } from "./models/user.js";
 import { VerifyJWT } from "./config/token.js";
 import borrowRouter from "./routers/borrower_router.js";
-
-// Test
-export let sample_users = [
-  { _id: 1, name: "A", password: "A", email: "a@gmail.com", role: "admin" },
-  { _id: 2, name: "B", password: "B", email: "b@gmail.com", role: "member" },
-  { _id: 3, name: "C", password: "C", email: "c@gmail.com", role: "member" },
-  { _id: 4, name: "D", password: "D", email: "d@gmail.com", role: "member" },
-];
-export let sample_books = [
-  {
-    _id: 1,
-    title: "Title1",
-    author: "Auth1",
-    isbn: "l",
-    copies: 1,
-    genre: "G1",
-    publication_date: "P1",
-  },
-  {
-    _id: 2,
-    title: "Title2",
-    author: "Auth2",
-    isbn: "l",
-    copies: 5,
-    genre: "G2",
-    publication_date: "P2",
-  },
-  {
-    _id: 3,
-    title: "Title3",
-    author: "Auth3",
-    isbn: "l",
-    copies: 4,
-    genre: "G3",
-    publication_date: "P3",
-  },
-];
-
-export let sample_borrow = [
-  {
-    user: 1,
-    book: 1,
-    return_status: true,
-    return_date: "12",
-    borrow_date: "10",
-  },
-  {
-    user: 1,
-    book: 2,
-    return_status: true,
-    return_date: "15",
-    borrow_date: "8",
-  },
-  { user: 2, book: 1, return_status: false, borrow_date: "10" },
-  { user: 3, book: 2, return_status: false, borrow_date: "10" },
-];
+import jwt from "jsonwebtoken";
+import { createContext } from "./config/graphql_auth.js";
 
 //Express
 const app = express();
@@ -103,7 +49,12 @@ app.use("/test", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-app.use("/graphql_test", expressMiddleware(apollo_server));
+app.use(
+  "/graphql_test",
+  expressMiddleware(apollo_server, {
+    context: async ({ req }) => createContext({ req }),
+  })
+);
 
 // ROUTES
 
