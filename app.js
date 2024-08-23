@@ -11,6 +11,7 @@ import bookRouter from "./routers/book_router.js";
 import loginRouter from "./routers/login_router.js";
 import { User } from "./models/user.js";
 import { VerifyJWT } from "./config/token.js";
+import borrowRouter from "./routers/borrower_router.js";
 
 // Test
 export let sample_users = [
@@ -109,7 +110,7 @@ app.use("/login", loginRouter);
 //Authorisation of all routes
 app.use(VerifyJWT);
 app.use("/books", bookRouter);
-
+app.use("/borrow", borrowRouter);
 //GraphQL Route
 app.use("/graphql", expressMiddleware(apollo_server));
 

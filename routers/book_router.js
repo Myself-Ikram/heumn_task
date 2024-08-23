@@ -1,6 +1,5 @@
 import express from "express";
 import { Book } from "../models/books.js";
-import jwt from "jsonwebtoken";
 import Authorization from "../config/auth.js";
 
 const bookRouter = express.Router();

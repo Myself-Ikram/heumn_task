@@ -1,13 +1,13 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const borrowSchema = new mongoose.Schema(
   {
-    user: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
       required: true,
     },
-    book: {
+    bookId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "books",
       required: true,
@@ -18,10 +18,6 @@ const borrowSchema = new mongoose.Schema(
     },
     return_date: {
       type: Date,
-    },
-    return_status: {
-      type: Boolean,
-      default: false,
     },
   },
   { timestamps: true }
