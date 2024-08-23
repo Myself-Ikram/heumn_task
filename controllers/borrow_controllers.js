@@ -1,11 +1,16 @@
+import { borrowBookValidation } from "../config/joi_validation/borrow_validation.js";
 import { Book } from "../models/books.js";
 import { Borrow } from "../models/borrow.js";
-import jwt from "jsonwebtoken";
 
 export const borrowBook = async (req, res) => {
   try {
+    const { error } = borrowBookValidation(req.body);
+    if (error) {
+      return res.status(501).json({
+        message: "Missing values",
+      });
+    }
     const { bookId, borrow_date } = req.body;
-    const decodeToken = jwt.decode(req.cookies.token);
     const book = await Book.findById(bookId);
     const borrowCount = await Borrow.countDocuments({
       bookId,
@@ -16,7 +21,7 @@ export const borrowBook = async (req, res) => {
       return res.status(200).json({ msg: "No books left to borrow!" });
     }
     const newBorrow = await new Borrow({
-      userId: decodeToken?.id,
+      userId: req.userId,
       bookId,
       borrow_date,
     }).save();
@@ -55,8 +60,7 @@ export const returnBook = async (req, res) => {
 
 export const bookHistory = async (req, res) => {
   try {
-    const decodeToken = jwt.decode(req.cookies.token);
-    const myBorrows = await Borrow.find({ userId: decodeToken?.id });
+    const myBorrows = await Borrow.find({ userId: req.userId });
     res.status(200).json(myBorrows);
   } catch (error) {
     res.status(501).json({ msg: error.message });

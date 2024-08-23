@@ -1,7 +1,18 @@
+import {
+  userLoginValidate,
+  userRegisterValidate,
+} from "../config/joi_validation/user_validation.js";
+import { generateToken } from "../config/token.js";
 import { User } from "../models/user.js";
-
+import bcrypt from "bcrypt";
 export const registerUser = async (req, res) => {
   try {
+    const { error } = userRegisterValidate(req.body);
+    if (error) {
+      return res.status(501).json({
+        message: "Missing values",
+      });
+    }
     const { email } = req.body;
     const userExist = await User.findOne({ email });
     if (userExist) {
@@ -23,6 +34,12 @@ export const registerUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
   try {
+    const { error } = userLoginValidate(req.body);
+    if (error) {
+      return res.status(501).json({
+        message: "Missing values",
+      });
+    }
     const { email, password } = req.body;
     const user = await User.findOne({ email }).select("+password");
     if (!user) {

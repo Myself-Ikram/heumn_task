@@ -1,3 +1,7 @@
+import {
+  bookAddValidation,
+  bookUpdateValidation,
+} from "../config/joi_validation/book_validation.js";
 import { Book } from "../models/books.js";
 
 export const getBooks = async (req, res) => {
@@ -11,6 +15,12 @@ export const getBooks = async (req, res) => {
 
 export const addBooks = async (req, res) => {
   try {
+    const { error } = bookAddValidation(req.body);
+    if (error) {
+      return res.status(501).json({
+        message: "Missing values",
+      });
+    }
     const newBook = await new Book({
       ...req.body,
     }).save();
@@ -26,6 +36,12 @@ export const addBooks = async (req, res) => {
 
 export const updateBook = async (req, res) => {
   try {
+    const { error } = bookUpdateValidation(req.body);
+    if (error) {
+      return res.status(501).json({
+        message: "Missing values",
+      });
+    }
     const updateBook = await Book.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });

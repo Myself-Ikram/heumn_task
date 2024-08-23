@@ -94,7 +94,7 @@ app.use(
 //COOKIE
 app.use(cookieParser());
 
-// ROUTES
+// Test
 app.use("/test", async (req, res) => {
   try {
     const users = await User.find();
@@ -103,15 +103,19 @@ app.use("/test", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+app.use("/graphql_test", expressMiddleware(apollo_server));
+
+// ROUTES
 
 //RestAPI
 app.use("/login", loginRouter);
 
 //Authorisation of all routes
 app.use(VerifyJWT);
+
 app.use("/books", bookRouter);
 app.use("/borrow", borrowRouter);
-//GraphQL Route
+//GraphQL
 app.use("/graphql", expressMiddleware(apollo_server));
 
 // INVALID ROUTE
