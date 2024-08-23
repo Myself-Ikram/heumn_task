@@ -31,6 +31,5 @@ export async function VerifyJWT(req, res, next) {
   //     next();
   //   });
 
-  console.log(jwt.decode(token));
   next();
 }
