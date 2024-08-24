@@ -9,8 +9,7 @@ This repository contains two main services:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/your-repo.git
-   cd your-repo
+   git clone https://github.com/Myself-Ikram/heumn_task.git
 2. **Install Dependencies**:
    ``bash
    npm install
