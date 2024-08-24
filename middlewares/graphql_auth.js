@@ -17,6 +17,4 @@ export const createContext = ({ req }) => {
   }
 };
 
-export const GraphqlAuth = (accessArray, role) => {
-  return accessArray?.includes(role);
-};
+export const GraphqlAuth = (accessArray, role) => accessArray?.includes(role);

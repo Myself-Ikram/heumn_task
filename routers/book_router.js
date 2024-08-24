@@ -1,5 +1,5 @@
 import express from "express";
-import Authorization from "../config/auth.js";
+import Authorization from "../middlewares/auth.js";
 import {
   addBooks,
   deleteBook,

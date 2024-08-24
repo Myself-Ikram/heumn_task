@@ -1,4 +1,4 @@
-import { GraphqlAuth } from "../../config/graphql_auth.js";
+import { GraphqlAuth } from "../../middlewares/graphql_auth.js";
 import { Book } from "../../models/books.js";
 
 export const getBooks = async (parent, args, context) => {

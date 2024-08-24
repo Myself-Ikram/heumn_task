@@ -127,18 +127,38 @@ export const mostActiveUser = async (req, res) => {
 
 export const bookSummary = async (req, res) => {
   try {
-    const books = await Book.find();
-    const borrowedBooks = await Borrow.find({ return_date: undefined });
-    let result = [];
-    for (let i = 0; i < books?.length; i++) {
-      const borrowed = 5;
-      result.push({
-        ...books[i]?._doc,
-        borrowed,
-        available: books[i]?.copies - borrowed,
-      });
-    }
-    return res.status(200).json({ result });
+    const data = await Book.aggregate([
+      {
+        $lookup: {
+          from: "borrows",
+          localField: "_id",
+          foreignField: "bookId",
+          as: "borrowedCopies",
+        },
+      },
+      {
+        $project: {
+          title: 1,
+          author: 1,
+          copies: 1,
+          BorrowedBooks: {
+            $size: {
+              $filter: {
+                input: "$borrowedCopies",
+                as: "borrow",
+                cond: { $eq: ["$$borrow.return_date", false] },
+              },
+            },
+          },
+        },
+      },
+      {
+        $addFields: {
+          AvailableBooks: { $subtract: ["$copies", "$BorrowedBooks"] },
+        },
+      },
+    ]);
+    return res.status(200).json({ data });
   } catch (error) {
     return res.status(501).json({ message: error.message });
   }

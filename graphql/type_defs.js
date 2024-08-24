@@ -16,7 +16,7 @@ export const graphqlDefs = `
         publication_date: String!
         genre: String!
         copies: Int!
-  }
+    }
     type Borrow {
     _id: ID!
     userId: User!
@@ -25,7 +25,7 @@ export const graphqlDefs = `
     return_date: String
     createdAt:String!
     updatedAt:String!
-  }
+    }
     type Aggregate{
           bookId: String!,
           bookTitle: String!,
@@ -50,6 +50,7 @@ export const graphqlDefs = `
     success:Boolean!
     data:[Borrow]
     }
+
     type Query{
       getBooks:bookResponse
 
@@ -60,11 +61,11 @@ export const graphqlDefs = `
     }
 
     type Mutation{
-    addBook(title:String!,author:String!,isbn:String!,publication_date:String!,genre:String,copies:Int): bookResponse
-    updateBook(id:ID!,title:String,author:String,isbn:String,publication_date:String,genre:String,copies:Int): bookResponse
-    deleteBook(id:ID!):bookResponse
+      addBook(title:String!,author:String!,isbn:String!,publication_date:String!,genre:String,copies:Int): bookResponse
+      updateBook(id:ID!,title:String,author:String,isbn:String,publication_date:String,genre:String,copies:Int): bookResponse
+      deleteBook(id:ID!):bookResponse
 
-    borrowBook(bookId:String!,borrow_date:String!):borrowResponse
-    returnBook(id:ID!):borrowResponse
+      borrowBook(bookId:String!,borrow_date:String!):borrowResponse
+      returnBook(id:ID!):borrowResponse
     }
   `;

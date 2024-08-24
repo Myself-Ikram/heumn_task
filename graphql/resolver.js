@@ -17,6 +17,7 @@ export const graphqlResolver = {
   Query: {
     // Books
     getBooks,
+
     // Borrows
     mostBorrowedBooks,
     mostActiveUser,
@@ -28,6 +29,7 @@ export const graphqlResolver = {
     addBook,
     updateBook,
     deleteBook,
+
     // Borrow
     borrowBook,
     returnBook,

@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
-import mongoose, { Query } from "mongoose";
+import mongoose from "mongoose";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { graphqlResolver } from "./graphql/resolver.js";
@@ -10,10 +10,8 @@ import { graphqlDefs } from "./graphql/type_defs.js";
 import bookRouter from "./routers/book_router.js";
 import loginRouter from "./routers/login_router.js";
 import { User } from "./models/user.js";
-import { VerifyJWT } from "./config/token.js";
 import borrowRouter from "./routers/borrower_router.js";
-import jwt from "jsonwebtoken";
-import { createContext } from "./config/graphql_auth.js";
+import { createContext } from "./middlewares/graphql_auth.js";
 
 //Express
 const app = express();
@@ -32,7 +30,7 @@ dotenv.config();
 //CORS
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: process.env.ALLOWED_ORIGIN,
     credentials: true,
   })
 );
@@ -60,14 +58,16 @@ app.use(
 
 //RestAPI
 app.use("/login", loginRouter);
-
-//Authorisation of all routes
-app.use(VerifyJWT);
-
 app.use("/books", bookRouter);
 app.use("/borrow", borrowRouter);
+
 //GraphQL
-app.use("/graphql", expressMiddleware(apollo_server));
+app.use(
+  "/graphql",
+  expressMiddleware(apollo_server, {
+    context: async ({ req }) => createContext({ req }),
+  })
+);
 
 // INVALID ROUTE
 app.use("*", (req, res) => {
