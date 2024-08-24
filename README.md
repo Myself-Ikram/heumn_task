@@ -11,10 +11,10 @@ This repository contains two main services:
    ```bash
    git clone https://github.com/Myself-Ikram/heumn_task.git
 2. **Install Dependencies**:
-   ``bash
+   ```bash
    npm install
 3. **Setup Environment variables**:
-   ``bash
+   ```bash
    PORT=8000
    MONGODB_URL=mongodb://127.0.0.1:27017/librarymanagementsystem
    JWT=KwRus3Gc7SYjTmrZyxtE8pd9g4UveqAQaV2Bk5NPCWDHbMLzfn
