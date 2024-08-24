@@ -24,7 +24,7 @@ This repository contains two main services:
    ``bash
    npm start
 
-## RESTFULL APIs
+## RESTFUL APIs
 
 | Method          | Endpoint                          | Description     |
 |-----------------|-----------------------------------|-----------------|
@@ -40,6 +40,7 @@ This repository contains two main services:
 |     GET         |borrow/most_borrowed_books         |get most borrowed books       |
 |     GET         |borrow/most_active_users           |get most active users       |
 |     GET         |borrow/books_summary               |get books summary        |
+
 
 
 
