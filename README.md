@@ -4,7 +4,7 @@
 This repository contains two main services:
 - **RESTful API**: A standard REST API for handling CRUD operations.
 - **GraphQL Service**: A flexible GraphQL endpoint for more advanced querying and mutations.
-- 
+
 ## Installation
 
 1. **Clone the repository**:
