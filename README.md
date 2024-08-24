@@ -37,9 +37,9 @@ This repository contains two main services:
 |     POST        |     /borrow                       |borrow a book    |
 |     GET         |borrow/return/:id                  |retrun a book    |
 |     GET         |borrow/myborrow                    |get all borrows  |
-|     GET         |borrow/most_borrowed_books         |user login       |
-|     GET         |borrow/most_active_users           |user login       |
-|     GET         |borrow/books_summary               |user login       |
+|     GET         |borrow/most_borrowed_books         |get most borrowed books       |
+|     GET         |borrow/most_active_users           |get most active users       |
+|     GET         |borrow/books_summary               |get books summary        |
 
 
 
